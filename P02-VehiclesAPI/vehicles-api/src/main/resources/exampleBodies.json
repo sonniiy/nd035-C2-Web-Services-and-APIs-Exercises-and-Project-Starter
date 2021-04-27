@@ -1,0 +1,26 @@
+/*{
+  "car": {
+    "condition":"USED",
+    "details": {
+      "body": "dsadas",
+      "model": "A2",
+      "manufacturer": "Audi",
+      "numberOfDoors": 2
+    }
+  }
+
+}*/
+
+
+{
+  "condition":"USED",
+  "details": {
+    "body": "dsadas",
+    "model": "A2",
+    "manufacturer": {
+      "code": 100,
+      "name": "Audi"
+    },
+    "numberOfDoors": 2
+  }
+}
