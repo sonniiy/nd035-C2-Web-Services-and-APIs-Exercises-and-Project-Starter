@@ -62,6 +62,7 @@ public class CarControllerTest {
     /**
      * Creates pre-requisites for testing, such as an example car.
      */
+
     @Before
     public void setup() {
         Car car = getCar();
@@ -94,15 +95,10 @@ public class CarControllerTest {
     @Test
     public void listCars() throws Exception {
 
-
-
         mvc.perform(
                 get("/cars")
                         .accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
-
-
-
     }
 
     /**
