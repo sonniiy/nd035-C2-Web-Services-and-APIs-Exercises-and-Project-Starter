@@ -30,12 +30,5 @@ public class PricingControllerTest {
 
 
 
-    @Test
-    public void getPrice() throws Exception {
-        mockMvc.perform(get("/services/price?vehicleId=1"))
-                .andExpect(status().isOk());
-
-
-    }
 
 }
