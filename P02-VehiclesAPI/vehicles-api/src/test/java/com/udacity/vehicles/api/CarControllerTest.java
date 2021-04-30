@@ -30,6 +30,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -68,6 +69,7 @@ public class CarControllerTest {
         given(carService.save(any())).willReturn(car);
         given(carService.findById(any())).willReturn(car);
         given(carService.list()).willReturn(Collections.singletonList(car));
+
     }
 
     /**
@@ -91,11 +93,15 @@ public class CarControllerTest {
      */
     @Test
     public void listCars() throws Exception {
-        /**
-         * TODO: Add a test to check that the `get` method works by calling
-         *   the whole list of vehicles. This should utilize the car from `getCar()`
-         *   below (the vehicle will be the first in the list).
-         */
+
+
+
+        mvc.perform(
+                get("/cars")
+                        .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk());
+
+
 
     }
 
@@ -105,10 +111,15 @@ public class CarControllerTest {
      */
     @Test
     public void findCar() throws Exception {
-        /**
-         * TODO: Add a test to check that the `get` method works by calling
-         *   a vehicle by ID. This should utilize the car from `getCar()` below.
-         */
+
+        Car car = getCar();
+        car.setId(3L);
+        mvc.perform(
+                get("/cars/{id}", car.getId())
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+        ).andExpect(status().isOk());
+
+
     }
 
     /**
@@ -117,11 +128,13 @@ public class CarControllerTest {
      */
     @Test
     public void deleteCar() throws Exception {
-        /**
-         * TODO: Add a test to check whether a vehicle is appropriately deleted
-         *   when the `delete` method is called from the Car Controller. This
-         *   should utilize the car from `getCar()` below.
-         */
+
+        Car car = getCar();
+        car.setId(2L);
+        carService.save(car);
+        mvc.perform(
+                delete("/cars/{id}", car.getId())
+        ).andExpect(status().isNoContent());
     }
 
     /**
