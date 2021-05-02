@@ -7,6 +7,7 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -131,6 +132,20 @@ public class CarControllerTest {
         mvc.perform(
                 delete("/cars/{id}", car.getId())
         ).andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void updateCar() throws Exception {
+
+        Car car = getCar();
+        car.setId(1L);
+        carService.save(car);
+
+        mvc.perform(
+                put("/cars/{id}", car.getId())
+                .content(json.write(car).getJson())
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+        ).andExpect(status().isOk());
     }
 
     /**
